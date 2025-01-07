@@ -56,6 +56,10 @@ public class HumanUnawareState: HumanBaseState
         }
 
         //If taken enough hints, then transition to aware state : TBD
+        if(state.AwarenessLevel >= 1.0f)
+        {
+            state.SwitchState(state.AwareState);
+        }
     }
 
     public override void OnHintEvent(Transform hintTransform)
@@ -68,7 +72,27 @@ public class HumanUnawareState: HumanBaseState
         lookAtHintTimer = lookAtHintDuration;
         isHintEventTriggered = true;
     }
+    public override void OnWeaponHintedEvent(Transform weaponTransform)
+    {
+        throw new System.NotImplementedException();
+    }
+    public override void OnKillOrder(Transform alienTransform)
+    {
+        throw new System.NotImplementedException();
+    }
+    public override bool GetIsArmed()
+    {
+        throw new System.NotImplementedException();
+    }
 
+    public override bool GetIsKillTargetAquired()
+    {
+        throw new System.NotImplementedException();
+    }
+    public override bool Equals(object obj)
+    {
+        return base.Equals(obj);
+    }
     private void LookAtHint(HumanAI state)
     {
         if (currentHintTransform != null)

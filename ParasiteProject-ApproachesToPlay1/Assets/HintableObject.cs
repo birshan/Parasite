@@ -55,6 +55,12 @@ public class HintableObject : MonoBehaviour
             objectRenderer.material = defaultMaterial;
     }
 
+    public void ResetHintableObject()
+    {
+        SetHighlighted(true);
+        activeHintableObject = true;
+    }
+
 }
 
 

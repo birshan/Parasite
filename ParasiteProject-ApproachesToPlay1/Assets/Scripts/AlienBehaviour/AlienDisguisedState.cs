@@ -38,7 +38,7 @@ public class AlienDisguisedState : AlienBaseState
     {
         if (state.VisionCone.IsObjectInVision(state.PlayerTransform))
         {
-            Debug.Log("Player is within vision cone of Alien");
+            // Debug.Log("Player is within vision cone of Alien");
 
             if (isHintEventTriggered)
             {
@@ -49,6 +49,7 @@ public class AlienDisguisedState : AlienBaseState
 
         if (isRespondingToHint)
         {
+            state.VisionCone.FocusNPCCone(true);
             // Look at the hint after the delay
             LookAtHint(state);
             lookAtHintTimer -= Time.deltaTime;
@@ -65,6 +66,7 @@ public class AlienDisguisedState : AlienBaseState
         }
         else if (isLookingAtPlayer)
         {
+            state.VisionCone.FocusNPCCone(true);
             // Look at the player for a few seconds
             LookAtPlayer(state);
             lookAtPlayerTimer -= Time.deltaTime;
@@ -74,16 +76,21 @@ public class AlienDisguisedState : AlienBaseState
                 AlienAI.SuspicionLevel = 1.0f;
                 UIManager.Instance.UpdateSuspicionBar(AlienAI.SuspicionLevel);
                 // VISION CONE TURN RED ??
-
+                
                 
             }
             if (lookAtPlayerTimer <= 0)
             {
                 isLookingAtPlayer = false;
             }
+
+            // VISION CONE TURN RED ?? - need it to lerp red multiple frames so here 
+            state.VisionCone.isUsingVisionSuspectingColorChangeMechanic = true; 
+            state.VisionCone.SuspectingWithVision(Time.deltaTime);
         }
         else
         {
+            state.VisionCone.FocusNPCCone(false);
             // Default behavior: look in random directions, updating every 3 seconds
             randomDirectionTimer -= Time.deltaTime;
             if (randomDirectionTimer <= 0)
@@ -97,7 +104,7 @@ public class AlienDisguisedState : AlienBaseState
 
     public override void OnHintEvent(Transform hintTransform)
     {
-        Debug.Log("Alien Disguised State OnHintEvent");
+        // Debug.Log("Alien Disguised State OnHintEvent");
 
         // Set up hint behavior
         currentHintTransform = hintTransform;

@@ -8,6 +8,7 @@ TagManager:
   - Human
   - Alien
   - Hint
+  - Weapon
   layers:
   - Default
   - TransparentFX

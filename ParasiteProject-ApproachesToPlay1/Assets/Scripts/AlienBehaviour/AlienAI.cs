@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -17,6 +18,20 @@ public class AlienAI : MonoBehaviour
 
     public static float SuspicionLevel = 0.0f;
 
+    public event Action<Transform> OnKillOrderEvent; // When the player orders human to kill this alien
+    private bool _isKillOrderReceived = false;
+
+
+    // Now that i think about it, these events should prolly all be in the Vision Cone script
+    public void Focus(float deltaTime)
+    {
+        if(!_isKillOrderReceived)
+        {
+            // _isKillOrderReceived = true;
+            OnKillOrderEvent?.Invoke(transform);
+            Debug.Log("Alien is focused, Kill Order Issued");
+        }
+    }
     private void OnEnable()
     {
         // HintableObject.OnHintEvent += HandleHintEvent;
